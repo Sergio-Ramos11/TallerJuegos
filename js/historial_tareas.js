@@ -1,32 +1,35 @@
 const form = document.forms['agregarDescrip'];
 
-const msg = document.getElementById('saludo');
-const date = document.getElementById('fecha');
 const prueba = document.getElementById('prueba');
 
 const mostrar = (descripcion, fecha) => {
-    msg.textContent = `descripcion = ${descripcion}`;
-    date.textContent = `fecha = ${fecha}`;
+    log(`Descripcion: ${descripcion}`, `Fecha: ${fecha}`);  //imprime en el log y obvio lo tengo que llamar
 
-    const p = document.createElement('p');
-    p.textContent = descripcion;
-    const div = document.createElement('div');
-    div.textContent = fecha;
+    const tr = document.createElement('tr');
 
-    prueba.appendChild(p);
-    prueba.appendChild(div);
+    const td = document.createElement('td');              //se crea una etiqueta p vacia 
+    td.textContent = descripcion;                        //para asignarle lo que hay en descripcion
+    const td1 = document.createElement('td');
+    td1.textContent = fecha;
+
+    tr.appendChild(td);          //Imprime dentro de div en una etiqueta p
+    tr.appendChild(td1);
+
+    prueba.appendChild(tr);
 }
 
 
 
 const log = (text, fecha) => {
+    
     const num = localStorage.length;
-    localStorage.setItem(`log-${num}`, `${text} ${fecha}`);     
+    //localStorage.setItem(`tarea-${num}`, `${text} ${fecha}`);     
     localStorage.setItem(`tarea-${num}`,JSON.stringify({
         text, fecha
     }));
     const o = JSON.parse(localStorage.getItem(`tarea-${num}`));
-    console.log(o.text, o.fecha)
+    console.log(o.text, o.fecha);
+    
 }
 
 
@@ -37,17 +40,8 @@ form.addEventListener('submit' , (ev) => {
     const date = form['fecha'].value;
     mostrar(desc, date);
 })
-
+/*
 form.addEventListener('click' , () => {
-    log(`El usuario ingreso: ${descripcion}`, `Para el ${fecha}`);
+    
 })
-
-
-
-
-
-
-
-
-
-
+*/
