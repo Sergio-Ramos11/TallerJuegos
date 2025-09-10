@@ -1,47 +1,48 @@
-const form = document.forms['agregarDescrip'];
+    const form = document.forms['agregarDescrip'];
+    const prueba = document.getElementById('prueba');
 
-const prueba = document.getElementById('prueba');
+    let registros = JSON.parse(localStorage.getItem("registros")) || [];
 
-const mostrar = (descripcion, fecha) => {
-    log(`Descripcion: ${descripcion}`, `Fecha: ${fecha}`);  //imprime en el log y obvio lo tengo que llamar
+    const mostrar = (descripcion, fecha) => {
+      const tr = document.createElement('tr');
 
-    const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.textContent = descripcion;
 
-    const td = document.createElement('td');              //se crea una etiqueta p vacia 
-    td.textContent = descripcion;                        //para asignarle lo que hay en descripcion
-    const td1 = document.createElement('td');
-    td1.textContent = fecha;
+      const td1 = document.createElement('td');
+      td1.textContent = fecha;
 
-    tr.appendChild(td);          //Imprime dentro de div en una etiqueta p
-    tr.appendChild(td1);
+      tr.appendChild(td);
+      tr.appendChild(td1);
 
-    prueba.appendChild(tr);
-}
+      prueba.appendChild(tr);
+    }
 
+    const mostrarTodos = () => {
+      prueba.innerHTML = "";    //Para asignarle a ese espacio "" osea vacio
+      registros.forEach(r => mostrar(r.descripcion, r.fecha));
+    }
 
+    const ordenar = () => {
+      registros.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+    }
 
-const log = (text, fecha) => {
-    
-    const num = localStorage.length;
-    //localStorage.setItem(`tarea-${num}`, `${text} ${fecha}`);     
-    localStorage.setItem(`tarea-${num}`,JSON.stringify({
-        text, fecha
-    }));
-    const o = JSON.parse(localStorage.getItem(`tarea-${num}`));
-    console.log(o.text, o.fecha);
-    
-}
+    const agregarRegistro = (desc, date) => {
+      registros.push({ descripcion: desc, fecha: date });   //Es un arreglo que contiene todos los elementos
+        //push es para agregar un nuevo elemento al localstorage
+      ordenar();
 
+      localStorage.setItem("registros", JSON.stringify(registros));  //Convertir el arreglo en textocon JSON.stringify
+        //Y se guarda asi en el local storage
+      mostrarTodos();
+    }
 
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const desc = form['desc'].value;
+      const date = form['fecha'].value;
+      agregarRegistro(desc, date);
+      form.reset();
+    });
 
-form.addEventListener('submit' , (ev) => {
-    ev.preventDefault();
-    const desc = form['desc'].value;
-    const date = form['fecha'].value;
-    mostrar(desc, date);
-})
-/*
-form.addEventListener('click' , () => {
-    
-})
-*/
+    mostrarTodos();

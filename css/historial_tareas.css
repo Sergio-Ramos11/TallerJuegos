@@ -1,4 +1,9 @@
 table{
-    border: 5px rgb(0, 0, 0);
+    border: 20px rgb(0, 0, 0);
     border-collapse: collapse;
+}
+
+th, td{
+    border: 20px #000000;
+    padding: 15px;
 }
