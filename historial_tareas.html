@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/historial_tareas.css">
@@ -7,7 +7,7 @@
 </head>
 <body>
     <form name="agregarDescrip">
-        <p>Ingresa tu próxima tarea por hacer</p>
+        <h1>Ingresa tu próxima tarea por hacer</h1>
         <input type="text" name="desc" placeholder="Ingrese una leve descripción">
         <br>
         <p>Ingresa la fecha para la tarea</p>
@@ -16,21 +16,57 @@
     </form>
 
 
-
+    <h2>TAREAS PENDIENTES</h2>
     <table>
         <thead>
             <tr>
-                <th>Fecha</th>
-                <th>Descripción</th>
+                <th>DESCRIPCIÓN</th>
+                <th>FECHA</th>
             </tr>
         </thead>
-        <tbody id="prueba">
+        <tbody id="tablaP">
 
         </tbody>
     </table>
 
+    <p>Contador:</p>
+    <p id="contP"></p>
 
-    <button id="">borrar tarea</button>
+
+    <br>
+
+
+    <h2>TAREAS COMPLETADAS</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>DESCRIPCIÓN</th>
+                <th>FECHA</th>
+            </tr>
+        </thead>
+        <tbody id="tablaC">
+
+        </tbody>
+    </table>
+
+    <p>Contador:</p>
+    <p id="contC"></p>
+
+
+
+    <br>
+
+    <form name="realizarTarea">
+        <input type="text" name="desc1" placeholder="Ingresa la tarea realizada">
+        <button id="tareaR">borrar tarea</button>
+    </form>
+    
+
+    <br><br>
+
+    <button id="limpiarBtn">
+        Limpiar storage
+    </button>
 
 
 
