@@ -1,173 +1,173 @@
-    const form = document.forms['agregarDescrip'];
-    const form1 = document.forms['realizarTarea'];
-    const busc = document.forms['buscarTarea'];
-    const tablaP = document.getElementById('tablaP');
-    const tablaC = document.getElementById('tablaC')
-    const limpiarBtn = document.getElementById('limpiarBtn');
-    const tareaR = document.getElementById('tareaR');
-    const tareaB = document.getElementById('tareaB');
-    const contP = document.getElementById('contP');
-    const contC = document.getElementById('contC');
-    const buscar = document.getElementById('buscar');
+const form = document.forms['agregarDescrip'];
+const form1 = document.forms['realizarTarea'];
+const busc = document.forms['buscarTarea'];
+const tablaP = document.getElementById('tablaP');
+const tablaC = document.getElementById('tablaC')
+const limpiarBtn = document.getElementById('limpiarBtn');
+const tareaR = document.getElementById('tareaR');
+const tareaB = document.getElementById('tareaB');
+const contP = document.getElementById('contP');
+const contC = document.getElementById('contC');
+const buscar = document.getElementById('buscar');
 
-    let pendientes = JSON.parse(localStorage.getItem("Pendientes")) || [];
+let pendientes = JSON.parse(localStorage.getItem("Pendientes")) || [];
 
-    let completadas = JSON.parse(localStorage.getItem("Completadas")) || [];
+let completadas = JSON.parse(localStorage.getItem("Completadas")) || [];
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
-    const tabla1 = (descripcion, fecha) => {
-        contadores();
-        const cont = localStorage.length;
-        const tr = document.createElement('tr');  
+const tabla1 = (descripcion, fecha) => {
+    contadores();
+    const cont = localStorage.length;
+    const tr = document.createElement('tr');
 
-        const td = document.createElement('td');
-        td.textContent = descripcion;
+    const td = document.createElement('td');
+    td.textContent = descripcion;
 
-        const td1 = document.createElement('td');
-        td1.textContent = fecha;
+    const td1 = document.createElement('td');
+    td1.textContent = fecha;
 
-        tr.appendChild(td);
-        tr.appendChild(td1);
+    tr.appendChild(td);
+    tr.appendChild(td1);
 
-        tablaP.appendChild(tr);
-    }
+    tablaP.appendChild(tr);
+}
 
-    const tabla2 = (descripcion, fecha) => {
-        const cont = localStorage.length;
-        const tr1 = document.createElement('tr');  
-        const td1 = document.createElement('td');
-        td1.textContent = descripcion;
+const tabla2 = (descripcion, fecha) => {
+    const cont = localStorage.length;
+    const tr1 = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.textContent = descripcion;
 
-        const td2 = document.createElement('td');
-        td2.textContent = fecha;
+    const td2 = document.createElement('td');
+    td2.textContent = fecha;
 
-        tr1.appendChild(td1);
-        tr1.appendChild(td2);
+    tr1.appendChild(td1);
+    tr1.appendChild(td2);
 
-        tablaC.appendChild(tr1);
-    }
+    tablaC.appendChild(tr1);
+}
 
 ////////////////////////////////////////////////////////////
 
 
-    const tareaRealizada = (descripcion) => {
-        pendientes.forEach(x => {
-           if (descripcion === x.descripcion) {
-                completadas.push(x);
-                pendientes = pendientes.filter(p => p.descripcion !== descripcion);
-                localStorage.setItem("Pendientes" , JSON.stringify(pendientes));
-                localStorage.setItem("Completadas" , JSON.stringify(completadas));
+const tareaRealizada = (descripcion) => {
+    pendientes.forEach(x => {
+        if (descripcion === x.descripcion) {
+            completadas.push(x);
+            pendientes = pendientes.filter(p => p.descripcion !== descripcion);
+            localStorage.setItem("Pendientes", JSON.stringify(pendientes));
+            localStorage.setItem("Completadas", JSON.stringify(completadas));
 
-                mostrarTabla1();
-                mostrarTabla2();
-            }  //El método filter recorre cada elemento del array y crea un nuevo array con solo los elementos que cumplen la condición.
-        });
+            mostrarTabla1();
+            mostrarTabla2();
+        }  //El método filter recorre cada elemento del array y crea un nuevo array con solo los elementos que cumplen la condición.
+    });
 
-    }
+}
 
-    const buscarTarea = (descripcion) => {
-        let cont = 0;
-        pendientes.forEach(x => {
-           if (descripcion === x.descripcion) {
-                cont = cont + 1;
-                buscar.textContent = x.descripcion + " - " + x.fecha;
-            } 
-            
-        });
+const buscarTarea = (descripcion) => {
+    let cont = 0;
+    pendientes.forEach(x => {
+        if (descripcion === x.descripcion) {
+            cont = cont + 1;
+            buscar.textContent = x.descripcion + " - " + x.fecha;
+        }
 
-            if (cont === 0) {
-                completadas.forEach(y => {
-                    if (descripcion === y.descripcion) {
-                        buscar.textContent = y.descripcion + " - " + y.fecha;
-                    }
-                });
+    });
+
+    if (cont === 0) {
+        completadas.forEach(y => {
+            if (descripcion === y.descripcion) {
+                buscar.textContent = y.descripcion + " - " + y.fecha;
             }
-            cont = 0;
-        
-    }   
-
-
-
-    const mostrarTabla2 = () => {
-        tablaC.innerHTML = "";    //Para asignarle a ese espacio "" osea vacio
-        completadas.forEach(r => tabla2(r.descripcion, r.fecha));
+        });
     }
+    cont = 0;
+
+}
 
 
-    const mostrarTabla1 = () => {
-        tablaP.innerHTML = "";    //Para asignarle a ese espacio "" osea vacio
-        pendientes.forEach(r => tabla1(r.descripcion, r.fecha));
-    }
+
+const mostrarTabla2 = () => {
+    tablaC.innerHTML = "";    //Para asignarle a ese espacio "" osea vacio
+    completadas.forEach(r => tabla2(r.descripcion, r.fecha));
+}
 
 
-    
-
-    const agregarRegistro1 = (desc, date) => {
-        pendientes.push({ descripcion: desc, fecha: date });   //Es un arreglo que contiene todos los elementos
-        //push es para agregar un nuevo elemento al localstorage
-        ordenar();
-
-        localStorage.setItem("Pendientes", JSON.stringify(pendientes));  //Convertir el arreglo en textocon JSON.stringify
-        //Y se guarda asi en el local storage
-        mostrarTabla1();
-    }
+const mostrarTabla1 = () => {
+    tablaP.innerHTML = "";    //Para asignarle a ese espacio "" osea vacio
+    pendientes.forEach(r => tabla1(r.descripcion, r.fecha));
+}
 
 
-    const agregarRegistro2 = (desc, date) => {
-        completadas.push({ descripcion: desc, fecha: date });   //Es un arreglo que contiene todos los elementos
-        //push es para agregar un nuevo elemento al localstorage
-        ordenar();
 
-        localStorage.setItem("Completadas", JSON.stringify(completadas)); 
 
-        mostrarTabla2();
-    }
+const agregarRegistro1 = (desc, date) => {
+    pendientes.push({ descripcion: desc, fecha: date });   //Es un arreglo que contiene todos los elementos
+    //push es para agregar un nuevo elemento al localstorage
+    ordenar();
+
+    localStorage.setItem("Pendientes", JSON.stringify(pendientes));  //Convertir el arreglo en textocon JSON.stringify
+    //Y se guarda asi en el local storage
+    mostrarTabla1();
+}
+
+
+const agregarRegistro2 = (desc, date) => {
+    completadas.push({ descripcion: desc, fecha: date });   //Es un arreglo que contiene todos los elementos
+    //push es para agregar un nuevo elemento al localstorage
+    ordenar();
+
+    localStorage.setItem("Completadas", JSON.stringify(completadas));
+
+    mostrarTabla2();
+}
 
 
 
 
 /////////////////////////////////////////////////////////////
 
-    const contadores = () => {    
-        contP.textContent = pendientes.length;
-        contC.textContent = completadas.length; 
-    }
+const contadores = () => {
+    contP.textContent = pendientes.length;
+    contC.textContent = completadas.length;
+}
 
-    
-    const ordenar = () => {
-        pendientes.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    }
+
+const ordenar = () => {
+    pendientes.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+}
 
 ////////////////////////////////////////////////////////////
 
-    form.addEventListener('submit', (ev) => {
-        ev.preventDefault();
-        const desc = form['desc'].value;
-        const date = form['fecha'].value;
-        agregarRegistro1(desc, date);
-        form.reset();
-    });
+form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const desc = form['desc'].value;
+    const date = form['fecha'].value;
+    agregarRegistro1(desc, date);
+    form.reset();
+});
 
-    form1.addEventListener('submit', (ev) => {
-        ev.preventDefault();
-        const desc1 = form1['desc1'].value;
-        tareaRealizada(desc1);
-    });
+form1.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const desc1 = form1['desc1'].value;
+    tareaRealizada(desc1);
+});
 
-    busc.addEventListener('submit', (ev) => {
-        ev.preventDefault();
-        const desc2 = busc['desc2'].value;
-        buscarTarea(desc2);
-    });
+busc.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const desc2 = busc['desc2'].value;
+    buscarTarea(desc2);
+});
 
 
-    limpiarBtn.addEventListener('click', () => {
-        localStorage.clear();
-    });
-    
+limpiarBtn.addEventListener('click', () => {
+    localStorage.clear();
+});
 
-    mostrarTabla1();
-    mostrarTabla2();
+
+mostrarTabla1();
+mostrarTabla2();

@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/memorama.css">
     <title>Memorama</title>
 </head>
+
 <body>
-    
 
 
+    <h1>Memorama</h1>
 
+    <div id="controles">
+        <button data-dificultad="4">Fácil (4x4)</button>
+        <button data-dificultad="6">Medio (6x6)</button>
+        <button data-dificultad="10">Difícil (10x10)</button>
+    </div>
 
+    <div id="tablero"></div>
 
-
+    <div id="info">
+        <p>Intentos: <span id="intentos">0</span></p>
+        <p>Tiempo: <span id="tiempo">0</span> seg</p>
+        <p>Mejor tiempo: <span id="mejorTiempo">-</span> | Menos intentos: <span id="mejoresIntentos">-</span></p>
+    </div>
 
 
     <script src="js/memorama.js"></script>
 </body>
+
 </html>

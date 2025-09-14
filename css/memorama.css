@@ -1,0 +1,50 @@
+    #controles {
+        margin: 20px;
+    }
+
+    #tablero {
+        display: grid;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .carta {
+        width: 60px;
+        height: 60px;
+        perspective: 1000px;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .cara {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+        border-radius: 8px;
+        transition: transform 0.5s;
+    }
+
+    .frontal {
+        background: lightblue;
+        transform: rotateY(0deg);
+    }
+
+    .trasera {
+        background: white;
+        transform: rotateY(180deg);
+    }
+
+    .carta.volteada .frontal {
+        transform: rotateY(180deg);
+    }
+
+    .carta.volteada .trasera {
+        transform: rotateY(0deg);
+    }
+
+    #info {
+        margin-top: 15px;
+        font-weight: bold;
+    }
