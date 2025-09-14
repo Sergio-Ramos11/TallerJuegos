@@ -1,11 +1,14 @@
     const form = document.forms['agregarDescrip'];
     const form1 = document.forms['realizarTarea'];
+    const busc = document.forms['buscarTarea'];
     const tablaP = document.getElementById('tablaP');
     const tablaC = document.getElementById('tablaC')
     const limpiarBtn = document.getElementById('limpiarBtn');
     const tareaR = document.getElementById('tareaR');
+    const tareaB = document.getElementById('tareaB');
     const contP = document.getElementById('contP');
     const contC = document.getElementById('contC');
+    const buscar = document.getElementById('buscar');
 
     let pendientes = JSON.parse(localStorage.getItem("Pendientes")) || [];
 
@@ -19,6 +22,7 @@
         contadores();
         const cont = localStorage.length;
         const tr = document.createElement('tr');  
+
         const td = document.createElement('td');
         td.textContent = descripcion;
 
@@ -64,6 +68,27 @@
 
     }
 
+    const buscarTarea = (descripcion) => {
+        let cont = 0;
+        pendientes.forEach(x => {
+           if (descripcion === x.descripcion) {
+                cont = cont + 1;
+                buscar.textContent = x.descripcion + " - " + x.fecha;
+            } 
+            
+        });
+
+            if (cont === 0) {
+                completadas.forEach(y => {
+                    if (descripcion === y.descripcion) {
+                        buscar.textContent = y.descripcion + " - " + y.fecha;
+                    }
+                });
+            }
+            cont = 0;
+        
+    }   
+
 
 
     const mostrarTabla2 = () => {
@@ -94,7 +119,7 @@
     const agregarRegistro2 = (desc, date) => {
         completadas.push({ descripcion: desc, fecha: date });   //Es un arreglo que contiene todos los elementos
         //push es para agregar un nuevo elemento al localstorage
-        //ordenar();
+        ordenar();
 
         localStorage.setItem("Completadas", JSON.stringify(completadas)); 
 
@@ -112,7 +137,7 @@
     }
 
     
-        const ordenar = () => {
+    const ordenar = () => {
         pendientes.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     }
 
@@ -130,7 +155,13 @@
         ev.preventDefault();
         const desc1 = form1['desc1'].value;
         tareaRealizada(desc1);
-    })
+    });
+
+    busc.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const desc2 = busc['desc2'].value;
+        buscarTarea(desc2);
+    });
 
 
     limpiarBtn.addEventListener('click', () => {
