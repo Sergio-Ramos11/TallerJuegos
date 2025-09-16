@@ -1,3 +1,10 @@
+    body{
+        background-color: rgb(15, 118, 136);
+        font-family: 'Times New Roman', Times, serif;
+        text-align: center;
+        color: white;
+    }
+    
     #controles {
         margin: 20px;
     }
@@ -32,7 +39,7 @@
     }
 
     .trasera {
-        background: white;
+        background: rgb(1, 118, 136);
         transform: rotateY(180deg);
     }
 
