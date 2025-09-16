@@ -17,46 +17,46 @@
         <button type="submit">Guardar</button>
     </form>
 
+    <div class="flex-container">
+        <div>
+            <h2>TAREAS PENDIENTES</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>DESCRIPCIÓN</th>
+                        <th>FECHA</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaP">
 
-    <h2>TAREAS PENDIENTES</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>DESCRIPCIÓN</th>
-                <th>FECHA</th>
-            </tr>
-        </thead>
-        <tbody id="tablaP">
+                </tbody>
+            </table>
 
-        </tbody>
-    </table>
+            <p>Contador:</p>
+            <p id="contP"></p>
 
-    <p>Contador:</p>
-    <p id="contP"></p>
+        </div>
 
+        <div>
 
-    <br>
+            <h2>TAREAS COMPLETADAS</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>DESCRIPCIÓN</th>
+                        <th>FECHA</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaC">
 
+                </tbody>
+            </table>
 
-    <h2>TAREAS COMPLETADAS</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>DESCRIPCIÓN</th>
-                <th>FECHA</th>
-            </tr>
-        </thead>
-        <tbody id="tablaC">
+            <p>Contador:</p>
+            <p id="contC"></p>
+        </div>
 
-        </tbody>
-    </table>
-
-    <p>Contador:</p>
-    <p id="contC"></p>
-
-
-
-    <br>
+    </div>
 
     <form name="realizarTarea">
         <input type="text" name="desc1" placeholder="Ingresa la tarea realizada">

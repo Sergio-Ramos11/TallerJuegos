@@ -1,9 +1,28 @@
-table{
-    border: 20px rgb(0, 0, 0);
-    border-collapse: collapse;
+body{
+    background-color: rgb(223, 187, 140);
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(0, 0, 0);
+    text-align: center;
 }
 
-th, td{
-    border: 20px #000000;
-    padding: 15px;
+input , button{
+    border-radius: 8px;
+}
+
+.flex-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 200px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.flex-container > div{
+    border: 2px solid black;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
 }

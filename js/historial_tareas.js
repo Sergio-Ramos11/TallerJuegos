@@ -73,7 +73,7 @@ const buscarTarea = (descripcion) => {
     pendientes.forEach(x => {
         if (descripcion === x.descripcion) {
             cont = cont + 1;
-            buscar.textContent = x.descripcion + " - " + x.fecha;
+            buscar.textContent = x.descripcion + " - " + x.fecha + "    TAREA PENDIENTE";
         }
 
     });
@@ -81,7 +81,7 @@ const buscarTarea = (descripcion) => {
     if (cont === 0) {
         completadas.forEach(y => {
             if (descripcion === y.descripcion) {
-                buscar.textContent = y.descripcion + " - " + y.fecha;
+                buscar.textContent = y.descripcion + " - " + y.fecha + "    TAREA COMPLETADA";
             }
         });
     }
