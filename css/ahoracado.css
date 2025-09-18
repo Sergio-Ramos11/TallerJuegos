@@ -1,0 +1,18 @@
+body {
+  font-family: 'Times New Roman', Times, serif;
+  background-color: cadetblue;
+  text-align: center;
+  background: #f7f7f7;
+}
+
+#teclado button {
+  margin: 3px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#ahorcado {
+  margin: 20px;
+  font-size: 18px;
+  white-space: pre;
+}

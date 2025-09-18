@@ -1,4 +1,191 @@
 var bd;
+const maxFallos = 6;
+let palabra = "";
+let categoria = "";
+let palabraMostrada = [];
+let letrasUsadas = [];
+let fallos = 0;
+let victorias = 0;
+let derrotas = 0;
+
+
+const palabras = {
+    animales: ["gato", "perro", "elefante", "tigre"],
+    frutas: ["manzana", "pera", "sandia", "melon"],
+    paises: ["colombia", "mexico", "argentina", "chile"]
+};
+
+function abrirBD() {
+    const solicitud = indexedDB.open("AhorcadoDB", 1);
+
+    solicitud.onupgradeneeded = e => {
+        bd = e.target.result;
+        bd.createObjectStore("partidas", { keyPath: "id", autoIncrement: true });
+    };
+
+    solicitud.onsuccess = e => {
+        bd = e.target.result;
+        cargarHistorial();
+    };
+
+    solicitud.onerror = () => alert("Error al abrir BD");
+}
+
+function guardarPartida(resultado) {
+    const trans = bd.transaction("partidas", "readwrite");
+    const store = trans.objectStore("partidas");
+    store.add({
+        palabra,
+        categoria,
+        resultado,
+        fecha: new Date().toLocaleString()
+    });
+
+    trans.oncomplete = cargarHistorial;
+}
+
+
+function cargarHistorial() {
+    const trans = bd.transaction("partidas", "readonly");
+    const store = trans.objectStore("partidas");
+    const req = store.openCursor();
+    const historial = document.getElementById("historial");
+    historial.innerHTML = "";
+
+    req.onsuccess = e => {
+        const cursor = e.target.result;
+        if (cursor) {
+            const { palabra, categoria, resultado, fecha } = cursor.value;
+            historial.innerHTML += `
+        <tr>
+          <td>${palabra}</td>
+          <td>${categoria}</td>
+          <td>${resultado}</td>
+          <td>${fecha}</td>
+        </tr>`;
+            cursor.continue();
+        }
+    };
+}
+
+
+function iniciarJuego() {
+    categoria = document.getElementById("categoria").value;
+    const lista = palabras[categoria];
+    palabra = lista[Math.floor(Math.random() * lista.length)];
+    palabraMostrada = Array(palabra.length).fill("_");
+    letrasUsadas = [];
+    fallos = 0;
+    actualizarPantalla();
+    generarTeclado();
+}
+
+
+function generarTeclado() {
+    const teclado = document.getElementById("teclado");
+    teclado.innerHTML = "";
+    for (let i = 65; i <= 90; i++) {
+        const letra = String.fromCharCode(i).toLowerCase();
+        const btn = document.createElement("button");
+        btn.textContent = letra;
+        btn.onclick = () => elegirLetra(letra, btn);
+        teclado.appendChild(btn);
+    }
+}
+
+
+function elegirLetra(letra, btn) {
+    if (letrasUsadas.includes(letra)) return;
+    letrasUsadas.push(letra);
+    btn.disabled = true;
+
+    if (palabra.includes(letra)) {
+        palabra.split("").forEach((l, i) => {
+            if (l === letra) palabraMostrada[i] = letra;
+        });
+    } else {
+        fallos++;
+    }
+
+    verificarJuego();
+    actualizarPantalla();
+}
+
+
+function verificarJuego() {
+    if (!palabraMostrada.includes("_")) {
+        alert("¡Ganaste! 🎉");
+        victorias++;
+        document.getElementById("victorias").textContent = victorias;
+        guardarPartida("Victoria");
+    } else if (fallos >= maxFallos) {
+        alert("Perdiste. La palabra era: " + palabra);
+        derrotas++;
+        document.getElementById("derrotas").textContent = derrotas;
+        guardarPartida("Derrota");
+    }
+}
+
+// Actualizar pantalla
+function actualizarPantalla() {
+    document.getElementById("palabraOculta").textContent = palabraMostrada.join(" ");
+    document.getElementById("letrasUsadas").textContent = letrasUsadas.join(", ");
+    document.getElementById("dibujo").textContent = obtenerDibujo();
+}
+
+// Dibujo simple
+function obtenerDibujo() {
+    const dibujos = [
+        ` 
+      
+    `,
+        `
+      O
+        
+    `,
+        `
+      O
+      |
+      
+
+    `,
+        `
+      O
+     /|
+      
+      
+    `,
+        `
+      O
+     /|\\
+      
+      
+      
+    `,
+        `
+      O
+     /|\\
+     / 
+      
+      
+    `,
+        `
+      O
+     /|\\
+     / \\
+      
+      
+    `
+    ];
+    return dibujos[fallos];
+}
+
+document.getElementById("btnIniciar").addEventListener("click", iniciarJuego);
+
+abrirBD();
+
+
+/*var bd;
 var cajaContactos;
 
 
@@ -57,5 +244,4 @@ function MostrarContactos() {
     var transaccion = bd.transaction(["Contactos"], "readonly");
 }
 
-
-//readonly es solo lectura
+*/

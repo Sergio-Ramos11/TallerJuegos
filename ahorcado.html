@@ -1,30 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Juego del Ahorcado</title>
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    
-    <h1>Guardar Contactos en IndexedDB</h1>
+  <h1>Ahorcados</h1>
 
-  <form id="formulario">
-    <label for="id">ID:</label>
-    <input type="text" id="id" required><br><br>
+  <div>
+    <label for="categoria">Elige categoría:</label>
+    <select id="categoria">
+      <option value="animales">Animales</option>
+      <option value="frutas">Frutas</option>
+      <option value="paises">Países</option>
+    </select>
+    <button id="btnIniciar">Iniciar juego</button>
+  </div>
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" required><br><br>
+  <h2 id="palabraOculta"></h2>
+  <p>Letras usadas: <span id="letrasUsadas"></span></p>
 
-    <label for="edadd">Edad:</label>
-    <input type="number" id="edadd" required><br><br>
+  <div id="ahorcado">
+    <!--Para mostrando el personaje -->
+    <pre id="dibujo"></pre>
+  </div>
 
-    <button type="button" id="btnGuardar">Guardar Contacto</button>
-  </form>
+  <div id="teclado"></div>
 
-  <h2>Contactos guardados</h2>
-  <ul id="listaContactos"></ul>
+  <h3>Historial</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Palabra</th>
+        <th>Categoría</th>
+        <th>Resultado</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody id="historial"></tbody>
+  </table>
 
+  <p>Victorias: <span id="victorias">0</span> | Derrotas: <span id="derrotas">0</span></p>
 
-    <script src="js/Ahorcado.js"></script>
+  <script src="js/Ahorcado.js"></script>
 </body>
 </html>
+
+
